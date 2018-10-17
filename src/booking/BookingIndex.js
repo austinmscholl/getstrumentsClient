@@ -3,6 +3,7 @@ import Helmet from 'react-helmet';
 import DayPicker, { DateUtils } from 'react-day-picker';
 import { Button } from 'reactstrap';
 import 'react-day-picker/lib/style.css';
+import APIURL from '../helpers/environment';
 
 export default class Example extends React.Component {
     static defaultProps = {
@@ -25,7 +26,7 @@ export default class Example extends React.Component {
     }
 
     fetchBookings = () => {
-        fetch("http://localhost:5000/bookings", {
+        fetch(`${APIURL}/bookings`, {
             method: 'GET',
             headers: new Headers({
                 'Content-Type': 'application/json',
@@ -47,7 +48,7 @@ export default class Example extends React.Component {
     }
     handleSubmit = (e) => { 
         e.preventDefault();
-        fetch(`http://localhost:5000/bookings`, {
+        fetch(`${APIURL}/bookings`, {
             method: 'POST',
             body: JSON.stringify({ booking: this.state }),
             headers: new Headers({

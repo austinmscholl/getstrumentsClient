@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import './item.css';
+import APIURL from '../helpers/environment'
 
 class ItemCreate extends React.Component {
     constructor(props) {
@@ -33,7 +34,7 @@ class ItemCreate extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault();
         console.log('button pressed')
-        fetch(`http://localhost:5000/items`, {
+        fetch(`${APIURL}/items`, {
             method: 'POST',
             body: JSON.stringify({ item: this.state }),
             headers: new Headers({

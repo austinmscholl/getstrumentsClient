@@ -3,6 +3,7 @@ import Select from 'react-select';
 import SelectionResults from './SelectionResults';
 import { Container, Row, Col } from 'reactstrap'
 import RentTable from './RentTable';
+import APIURL from '../helpers/environment';
 
 class RentIndex extends React.Component {
     constructor(props) {
@@ -16,7 +17,7 @@ class RentIndex extends React.Component {
     fetchResults = event => {
         event.preventDefault();
 
-        fetch(`http://localhost:5000/items/rent/${this.state.type}`, {
+        fetch(`${APIURL}/items/rent/${this.state.type}`, {
             method: 'GET',
             headers: new Headers({
                 'Content-Type': 'application/json',

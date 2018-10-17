@@ -3,6 +3,7 @@ import { Alert, Container, Row, Col } from 'reactstrap';
 import ItemCreate from './ItemCreate';
 import ItemsTable from './ItemTable';
 import ItemEdit from './ItemEdit';
+import APIURL from '../helpers/environment';
 
 class ItemIndex extends React.Component {
     constructor(props) {
@@ -21,7 +22,7 @@ class ItemIndex extends React.Component {
     }
 
     fetchItems = () => {
-        fetch("http://localhost:5000/items", {
+        fetch(`${APIURL}/items`, {
             method: 'GET',
             headers: new Headers({
                 'Content-Type': 'application/json',
@@ -35,7 +36,7 @@ class ItemIndex extends React.Component {
     }
 
     itemDelete = (e) => {
-        fetch(`http://localhost:5000/items/${e.target.id}`, {
+        fetch(`${APIURL}/items/${e.target.id}`, {
             method: 'DELETE',
             body: JSON.stringify({ item: { id: e.target.id } }),
             headers: new Headers({
@@ -48,7 +49,7 @@ class ItemIndex extends React.Component {
 
     itemUpdate = (e, item) => {
         console.log("updated item values:", {item: item})
-        fetch(`http://localhost:5000/items/${item.id}`, {
+        fetch(`${APIURL}/items/${item.id}`, {
             method: 'PUT',
             body: JSON.stringify({item}),
             headers: new Headers({

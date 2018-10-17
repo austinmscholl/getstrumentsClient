@@ -4,10 +4,12 @@ import Auth from './auth/Auth';
 import Splash from './Home/Splash';
 import Footer from './Home/Footer';
 import './Home/footer.css';
+import APIURL from './helpers/environment';
 import {
   BrowserRouter as Router,
   Route
 } from 'react-router-dom';
+
 
 
 class App extends Component {
