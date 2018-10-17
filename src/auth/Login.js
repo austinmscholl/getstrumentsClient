@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import APIURL from '../helpers/environment';
 
 class Login extends Component {
 
@@ -19,7 +20,7 @@ class Login extends Component {
 
     handleSubmit = (e) => {
         console.log('button pressed')
-        fetch("http://localhost:5000/api/login", {
+        fetch(`${APIURL}/api/login`, {
             method: 'POST',
             body: JSON.stringify({user:this.state}),
             headers: new Headers({

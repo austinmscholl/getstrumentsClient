@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
+import APIURL from '../helpers/environment';
 
 class Signup extends Component {
     constructor(props) {
@@ -24,7 +25,7 @@ class Signup extends Component {
             alert('email is required')
         }
 
-        fetch("http://localhost:5000/api/signup", {
+        fetch(`${APIURL}/api/signup`, {
             method: 'POST',
             body: JSON.stringify({user:this.state}),
             headers: new Headers({
