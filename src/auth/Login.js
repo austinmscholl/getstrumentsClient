@@ -44,7 +44,7 @@ class Login extends Component {
                 <Form onSubmit={this.handleSubmit} >
                     <FormGroup>
                         <Label for="email">Email</Label>
-                        <Input id="li_email" type="text" name="email" placeholder="enter email" onChange={this.handleChange} />
+                        <Input id="li_email" type="email" name="email" placeholder="enter email" onChange={this.handleChange} />
                     </FormGroup>
                     <FormGroup>
                         <Label for="password">Password</Label>

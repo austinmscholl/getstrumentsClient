@@ -46,11 +46,11 @@ class Signup extends Component {
                 <Form onSubmit={this.handleSubmit} >
                     <FormGroup>
                         <Label for="email">Email</Label>
-                        <Input id="email" type="text" name="email" placeholder="enter email" onChange={this.handleChange} />
+                        <Input id="email" type="email" name="email" placeholder="enter email" onChange={this.handleChange} />
                     </FormGroup>
                     <FormGroup>
                         <Label for="password">Password</Label>
-                        <Input id="su_password" type="password" name="password" placeholder="enter password" onChange={this.handleChange} />
+                        <Input id="su_password" type="password" minLength="8" required name="password" placeholder="enter password" onChange={this.handleChange} />
                     </FormGroup>
                     <Button type="submit"> Submit </Button>
                 </Form>
