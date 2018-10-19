@@ -47,19 +47,19 @@ class Splash extends React.Component {
                 </Switch>
             </div>
                 
-            <div>
+            <div className="spaceBtns">
                 <hr />
                 {
                     this.state.listDefault &&  <div className="buttons">
                     <Link to='/list'>
-                        <Button onClick={this.handleClick} color="primary">List an Instrument</Button>
+                        <Button onClick={this.handleClick} color="#2D457D">List an Instrument</Button>
                     </Link>
                 </div> 
                 }
                 {
                     this.state.rentDefault && <div className="buttons">
                     <Link to='/rent'>
-                        <Button onClick={this.handleClick} color="primary">Rent an Instrument</Button>
+                        <Button onClick={this.handleClick} color="#2D457D">Rent an Instrument</Button>
                     </Link>
                 </div> 
                 }

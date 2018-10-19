@@ -3,7 +3,8 @@
     padding: 2em;
     border: 1px solid #e5e5e5;
     border-radius: 0.4em;
-    box-shadow: 2px 4px 20px #f0f0f0;
+    /* box-shadow: 2px 4px 20px #f0f0f0; */
+    background-color: #207070;
 }
 
 .login-col {
@@ -12,4 +13,8 @@
 
 .welcome {
     text-align: center;
+}
+
+.color {
+  background-color: #2D457D;
 }

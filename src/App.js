@@ -9,6 +9,7 @@ import {
   BrowserRouter as Router,
   Route
 } from 'react-router-dom';
+import './App.css';
 
 
 
@@ -64,7 +65,7 @@ protectedViews = () => {
   render() {
     return (
       <Router>
-        <div>
+        <div className="baseColor">
           <NavBar clickLogout={this.logout} />
           {this.protectedViews()}
           <Footer />

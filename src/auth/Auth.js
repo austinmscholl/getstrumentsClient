@@ -7,7 +7,7 @@ import './auth.css';
 
 const Auth = (props) => {
     return (
-        <div>
+        <div className="color">
             <h4 className="welcome">Welcome to Getstruments</h4>
             <h5 className="welcome">Resource-sharing for Local Musicians</h5>
             <Container className="auth-container">

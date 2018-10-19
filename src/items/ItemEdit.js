@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Form, FormGroup, Label, Input, Modal, ModalHeader, ModalBody } from 'reactstrap';
+import './item.css';
 
 class ItemEdit extends React.Component {
     constructor(props) {
@@ -46,8 +47,8 @@ class ItemEdit extends React.Component {
         return (
             <div>
                 <Modal isOpen={true}>
-                    <ModalHeader >List an Instrument</ModalHeader>
-                    <ModalBody>
+                    <ModalHeader className="mdlHeader">List an Instrument</ModalHeader>
+                    <ModalBody className="mdlColor">
                         <Form onSubmit={this.handleSubmit} >
                             <FormGroup>
                                 <Label for="type">Type</Label>

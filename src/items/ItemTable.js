@@ -57,6 +57,7 @@
 
 import React from 'react';
 import { Table, Button, Modal, ModalBody, ModalFooter } from 'reactstrap';
+import './item.css';
 
 class ItemTable extends React.Component {
     constructor(props) {
@@ -75,10 +76,10 @@ class ItemTable extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="tableColor">
                 <h3>Listed Items</h3>
                 <hr />
-                <Table striped responsive>
+                <Table responsive >
                     <thead>
                         <tr>
                             <th>Type</th>

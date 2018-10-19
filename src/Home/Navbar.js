@@ -8,6 +8,7 @@ import {
     NavItem,
     Button
 } from 'reactstrap';
+import './navbar.css';
 
 class SiteBar extends Component {
     constructor(props) {   //2

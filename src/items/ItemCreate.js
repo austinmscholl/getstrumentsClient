@@ -103,7 +103,7 @@ class ItemCreate extends React.Component {
                             <Label for="rating">Rating</Label>
                             <Input id="rating" type="text" name="rating" value={this.state.rating} onChange={this.handleChange} />
                         </FormGroup>
-                        <Button type="submit" color="primary"> Submit </Button>
+                        <Button color="#1A3165" type="submit"> Submit </Button>
                         </Form>
             </div>
         )

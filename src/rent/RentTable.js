@@ -72,7 +72,7 @@ class RentTable extends React.Component {
         <div className="rentTable">
             <h3>{title}</h3>
             <hr />
-            <Table striped>
+            <Table responsive>
                 <thead>
                     <tr>
                         <th>Type</th>
