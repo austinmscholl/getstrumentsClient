@@ -7,9 +7,9 @@ Back-end repository: https://github.com/austinmscholl/getstrumentsServer
 
 # Features:
 * Single page app format with a central switch statement that renders one of three possible interfaces:
- - List an Instrument: A table user-specific, listed instruments with options to Create, Update and Delete.
- - Rent an Instrument: Search listed instruments by type.
- - Booking: Two calendars for begin rental date and end rental date. Creates a database entry associated with itemId.
+ * List an Instrument: A table user-specific, listed instruments with options to Create, Update and Delete.
+ * Rent an Instrument: Search listed instruments by type.
+ * Booking: Two calendars for begin rental date and end rental date. Creates a database entry associated with itemId.
  
 * Authentication required for all queries to the back end (JWT credentials circulated throughout components by way of Context)
 
