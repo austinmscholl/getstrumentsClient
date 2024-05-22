@@ -1,4 +1,4 @@
-import React, { Component } from 'react'; 
+import React, { useState } from 'react';
 import {
     Collapse,
     Navbar,
@@ -8,40 +8,30 @@ import {
     NavItem,
     Button
 } from 'reactstrap';
-import './navbar.css';
+import '../../src/styles.css';
 
-class SiteBar extends Component {
-    constructor(props) {   //2
-        super(props);
-        this.state = {
-            isOpen: false
-        };
-    }
+const SiteBar = (props) => {
+    const [isOpen, setIsOpen] = useState(false);
 
-    toggle = () => {
-        this.setState({
-            isOpen: !this.state.isOpen
-        });
-    }
+    const toggle = () => {
+        setIsOpen(!isOpen);
+    };
 
-    //3
-    render() {
-        return (
-            <div>
-                <Navbar color=""  light expand="md">
-                    <NavbarBrand href="/"><p>Getstruments</p></NavbarBrand>
-                    <NavbarToggler onClick={this.toggle} />
-                    <Collapse isOpen={this.state.isOpen} navbar>
-                        <Nav className="ml-auto" navbar>
-                            <NavItem>
-                                <Button onClick={() => this.props.clickLogout()}>Logout</Button>
-                            </NavItem>
-                        </Nav>
-                    </Collapse>
-                </Navbar>
-            </div>
-        );
-    }
+    return (
+        <div>
+            <Navbar color="" light expand="md">
+                <NavbarBrand href="/"><p>Getstruments</p></NavbarBrand>
+                <NavbarToggler onClick={toggle} />
+                <Collapse isOpen={isOpen} navbar>
+                    <Nav className="ml-auto" navbar>
+                        <NavItem>
+                            <Button onClick={props.clickLogout}>Logout</Button>
+                        </NavItem>
+                    </Nav>
+                </Collapse>
+            </Navbar>
+        </div>
+    );
 }
 
 export default SiteBar;

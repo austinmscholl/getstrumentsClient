@@ -1,37 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Col } from 'reactstrap';
 import RentTable from './RentTable';
 
-class SelectionResults extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            results: [],
-            selectionMade: false,
-            type: ''
+const SelectionResults = ({ fetchResults, resultsFromProps = [], isSelectionMade = false }) => {
+    const [results, setResults] = useState(resultsFromProps);
+    const [selectionMade, setSelectionMade] = useState(isSelectionMade);
+
+    useEffect(() => {
+        if (fetchResults) {
+            fetchResults().then(fetchedResults => {
+                setResults(fetchedResults);
+                setSelectionMade(true);
+            });
         }
-    }
+    }, [fetchResults]);
 
-    handleChange(e) {
-        
-    }
-
-    render() {
-        const results = this.state.results.length >= 1 ?
-            <RentTable results={this.state.results} /> :
-            <div>Or here</div>
-        return (
-            <Container>
-                <Col md="12">
-                    {
-                        this.state.selectionMade ? {results}
-                        : <div>Results go here</div>
-                    }
-                </Col>
-            </Container>
-        )
-    }
-}
-
+    return (
+        <Container>
+            <Col md="12">
+                {selectionMade ? (
+                    results.length >= 1 ? (
+                        <RentTable results={results} />
+                    ) : (
+                        <div>No results found.</div>
+                    )
+                ) : (
+                    <div>Results go here</div>
+                )}
+            </Col>
+        </Container>
+    );
+};
 
 export default SelectionResults;

@@ -1,107 +1,92 @@
-import React from 'react';
-import { Alert, Container, Row, Col } from 'reactstrap';
+import React, { useState, useEffect } from 'react';
+import { Container, Row, Col } from 'reactstrap';
 import ItemCreate from './ItemCreate';
 import ItemsTable from './ItemTable';
 import ItemEdit from './ItemEdit';
 import APIURL from '../helpers/environment';
 
-class ItemIndex extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            items: [],
-            updatePressed: false,
-            itemToUpdate: {},
-            itemId: '',
-            visible: true
-        }
-    }
+const ItemIndex = (props) => {
+    const [items, setItems] = useState([]);
+    const [updatePressed, setUpdatePressed] = useState(false);
+    const [itemToUpdate, setItemToUpdate] = useState(null);
 
-    componentDidMount() {
-        this.fetchItems()
-    }
+    useEffect(() => {
+        fetchItems();
+    }, []);
 
-    fetchItems = () => {
+    const fetchItems = () => {
         fetch(`${APIURL}/items`, {
             method: 'GET',
-            headers: new Headers({
+            headers: {
                 'Content-Type': 'application/json',
-                'Authorization': this.props.token
-            })
+                'Authorization': props.token
+            }
         })
-            .then((res) => res.json())
-            .then((itemData) => {
-                return this.setState({ items: itemData })
-            })
-    }
+        .then(res => res.json())
+        .then(itemData => setItems(itemData));
+    };
 
-    itemDelete = (e) => {
-        fetch(`${APIURL}/items/${e.target.id}`, {
+    const itemDelete = (id) => {
+        fetch(`${APIURL}/items/${id}`, {
             method: 'DELETE',
-            body: JSON.stringify({ item: { id: e.target.id } }),
-            headers: new Headers({
+            headers: {
                 'Content-Type': 'application/json',
-                'Authorization': this.props.token
-            })
+                'Authorization': props.token
+            }
         })
-        .then((res) => this.fetchItems())
-    }
+        .then(() => fetchItems());
+    };
 
-    itemUpdate = (e, item) => {
-        console.log("updated item values:", {item: item})
+    const itemUpdate = (item) => {
         fetch(`${APIURL}/items/${item.id}`, {
             method: 'PUT',
-            body: JSON.stringify({item}),
-            headers: new Headers({
+            body: JSON.stringify({ item }),
+            headers: {
                 'Content-Type': 'application/json',
-                'Authorization': this.props.token
-            })
+                'Authorization': props.token
+            }
         })
-        .then((res) => {
-            console.log(res)
-            this.setState({ updatePressed: false })
-            this.fetchItems();
-        })
-    }
+        .then(() => {
+            setUpdatePressed(false);
+            fetchItems();
+        });
+    };
 
-    setUpdatedItem = (e, item) => {
-        console.log("item to update:", item)
-        this.setState({
-            updatePressed: true,
-            itemToUpdate: item
-        })
-    }
+    const setUpdatedItem = (item) => {
+        setUpdatePressed(true);
+        setItemToUpdate(item);
+    };
 
-    handleCancel = () => {
-        this.setState({
-            updatePressed: false
-        })
-    }
+    const handleCancel = () => {
+        setUpdatePressed(false);
+    };
 
-    render() {
-        const items = this.state.items.length >= 1 ?
-            <ItemsTable items={this.state.items} itemId={this.state.itemId}
-            delete={this.itemDelete} update={this.setUpdatedItem} /> : <h2>Log an item to see a table</h2>
-        return (
-            <Container>
-                <Row>
-                    <Col md="3">
-                        <ItemCreate token={this.props.token} updateItemsArray={this.fetchItems} />
-                    </Col>
-                    <Col md="9">
-                        {items}
-                    </Col>
-                </Row>
-                <Col md="12">
-                    {
-                        this.state.updatePressed ? <ItemEdit t={this.state.updatePressed} cancel={this.handleCancel} update={this.itemUpdate} item={this.state.itemToUpdate} />
-                        : <div></div>
-                    }
+    return (
+        <Container>
+            <Row>
+                <Col md="3">
+                    <ItemCreate token={props.token} updateItemsArray={fetchItems} />
                 </Col>
-            </Container>
-        )
-    }
-}
-
+                <Col md="9">
+                    {items.length > 0 ? (
+                        <ItemsTable items={items} delete={itemDelete} update={setUpdatedItem} />
+                    ) : (
+                        <h2>Log an item to see a table</h2>
+                    )}
+                </Col>
+            </Row>
+            <Col md="12">
+                {updatePressed && (
+                    <ItemEdit
+                        t={updatePressed}
+                        cancel={handleCancel}
+                        update={itemUpdate}
+                        item={itemToUpdate}
+                    />
+                )}
+            </Col>
+        </Container>
+    );
+};
 
 export default ItemIndex;

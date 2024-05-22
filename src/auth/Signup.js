@@ -1,62 +1,70 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import APIURL from '../helpers/environment';
 
-class Signup extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            email: '',
-            password: ''
-        };
-    }
+const Signup = ({ setToken }) => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
-    handleChange = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value,
-        });
-    }
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        if (name === 'email') setEmail(value);
+        if (name === 'password') setPassword(value);
+    };
 
-    handleSubmit = (e) => {
-
-        e.preventDefault()
-        console.log('submit started')
-        if(e.target.email.value === '') {
-            alert('email is required')
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (!email) {
+            alert('Email is required');
+            return;
         }
 
         fetch(`${APIURL}/api/signup`, {
             method: 'POST',
-            body: JSON.stringify({user:this.state}),
+            body: JSON.stringify({ user: { email, password } }),
             headers: new Headers({
                 'Content-Type': 'application/json'
             })
-        }).then(
-            (response) => response.json()
-        ).then((data) => {
-            this.props.setToken(data.sessionToken)
         })
-    }
+            .then(response => response.json())
+            .then(data => {
+                setToken(data.sessionToken);
+            });
+    };
 
-    render() {
-        return (
-            <div>
-                <h1>Sign Up</h1>
-                <div></div>
-                <Form onSubmit={this.handleSubmit} >
-                    <FormGroup>
-                        <Label for="email">Email</Label>
-                        <Input id="email" type="email" name="email" placeholder="enter email" onChange={this.handleChange} />
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="password">Password</Label>
-                        <Input id="su_password" type="password" minLength="8" required name="password" placeholder="enter password" onChange={this.handleChange} />
-                    </FormGroup>
-                    <Button type="submit"> Submit </Button>
-                </Form>
-            </div>
-        )
-    }
-}
+    return (
+        <div>
+            <h1>Sign Up</h1>
+            <Form onSubmit={handleSubmit}>
+                <FormGroup>
+                    <Label for="email">Email</Label>
+                    <Input
+                        id="email"
+                        type="email"
+                        name="email"
+                        placeholder="Enter email"
+                        value={email}
+                        onChange={handleChange}
+                        required
+                    />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="password">Password</Label>
+                    <Input
+                        id="su_password"
+                        type="password"
+                        minLength="8"
+                        name="password"
+                        placeholder="Enter password"
+                        value={password}
+                        onChange={handleChange}
+                        required
+                    />
+                </FormGroup>
+                <Button type="submit">Submit</Button>
+            </Form>
+        </div>
+    );
+};
 
 export default Signup;

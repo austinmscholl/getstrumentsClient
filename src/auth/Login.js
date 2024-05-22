@@ -1,61 +1,68 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import APIURL from '../helpers/environment';
-import './auth.css';
+import '../../src/styles.css';
 
-class Login extends Component {
+const Login = ({ setToken }) => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            email: '',
-            password: ''
-        };
-    }
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        if (name === 'email') setEmail(value);
+        if (name === 'password') setPassword(value);
+    };
 
-    handleChange = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value,
-        });
-    }
-
-    handleSubmit = (e) => {
-        console.log('button pressed')
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log('button pressed');
         fetch(`${APIURL}/api/login`, {
             method: 'POST',
-            body: JSON.stringify({user:this.state}),
+            body: JSON.stringify({ user: { email, password } }),
             headers: new Headers({
                 'Content-Type': 'application/json'
-              })
-        }).then(
-            (response) => response.json()
-        ).then((data) => {
-            console.log(data.sessionToken);
-            this.props.setToken(data.sessionToken)
-            localStorage.setItem('token', data.sessionToken)
-        }) 
-        e.preventDefault()
-    }
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.sessionToken);
+                setToken(data.sessionToken);
+                localStorage.setItem('token', data.sessionToken);
+            });
+    };
 
-    render() {
-        return (
-            <div>
-                <h1>Login</h1>
-                <div></div>
-                <Form onSubmit={this.handleSubmit} >
-                    <FormGroup>
-                        <Label for="email">Email</Label>
-                        <Input id="li_email" type="email" name="email" placeholder="enter email" onChange={this.handleChange} />
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="password">Password</Label>
-                        <Input id="li_password" type="password" name="password" placeholder="enter password" onChange={this.handleChange} />
-                    </FormGroup>
-                    <Button type="submit"> Submit </Button>
-                </Form>
-            </div>
-        )
-    }
-}
+    return (
+        <div>
+            <h1>Login</h1>
+            <Form onSubmit={handleSubmit}>
+                <FormGroup>
+                    <Label for="li_email">Email</Label>
+                    <Input
+                        id="li_email"
+                        type="email"
+                        name="email"
+                        placeholder="Enter email"
+                        value={email}
+                        onChange={handleChange}
+                        required
+                    />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="li_password">Password</Label>
+                    <Input
+                        id="li_password"
+                        type="password"
+                        name="password"
+                        placeholder="Enter password"
+                        value={password}
+                        onChange={handleChange}
+                        required
+                    />
+                </FormGroup>
+                <Button type="submit">Submit</Button>
+            </Form>
+        </div>
+    );
+};
 
 export default Login;

@@ -2,10 +2,9 @@ import React from 'react';
 import { Container, Row, Col } from 'reactstrap';
 import Signup from './Signup';
 import Login from './Login';
-import './auth.css';
+import '../../src/styles.css';
 
-
-const Auth = (props) => {
+const Auth = ({ setToken }) => {
     return (
         <div className="color">
             <h4 className="welcome">Welcome to Getstruments</h4>
@@ -13,15 +12,15 @@ const Auth = (props) => {
             <Container className="auth-container">
                 <Row>
                     <Col md="6">
-                        <Signup setToken={props.setToken} />
+                        <Signup setToken={setToken} />
                     </Col>
                     <Col md="6" className="login-col">
-                        <Login setToken={props.setToken} />
+                        <Login setToken={setToken} />
                     </Col>
                 </Row>
             </Container>
         </div>
-    )
+    );
 }
 
 export default Auth;
