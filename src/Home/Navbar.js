@@ -8,7 +8,7 @@ import {
     NavItem,
     Button
 } from 'reactstrap';
-import '../../src/styles.css';
+import '../styles.css';
 
 const SiteBar = (props) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -19,9 +19,9 @@ const SiteBar = (props) => {
 
     return (
         <div>
-            <Navbar color="" light expand="md">
+            <Navbar color="light" light expand="md">
                 <NavbarBrand href="/"><p>Getstruments</p></NavbarBrand>
-                <NavbarToggler onClick={toggle} />
+                <NavbarToggler onClick={toggle} aria-controls="navbarNav" aria-expanded={isOpen} aria-label="Toggle navigation" />
                 <Collapse isOpen={isOpen} navbar>
                     <Nav className="ml-auto" navbar>
                         <NavItem>

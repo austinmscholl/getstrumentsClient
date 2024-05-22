@@ -1,5 +1,4 @@
-// In App.js
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import NavBar from './Home/Navbar';
 import Auth from './auth/Auth';
@@ -7,61 +6,49 @@ import Splash from './Home/Splash';
 import Footer from './Home/Footer';
 import './styles.css'; // Consolidated CSS file
 
-class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      sessionToken: ''  //1
-    }
-  }
+const App = () => {
+  const [sessionToken, setSessionToken] = useState('');
 
-  componentDidMount() {  // Use componentDidMount instead of componentWillMount
-    const token = localStorage.getItem('token'); //4
-    if (token && !this.state.sessionToken) {   //5 
-      this.setState({ sessionToken: token });
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setSessionToken(token);
     }
-  }
-  
-  setSessionState = (token) => {
-    localStorage.setItem('token', token); //3
-    this.setState({ sessionToken: token });
-  }
+  }, []);
 
-  // need to reset path to '/' on logout
-  logout = () => {
-    this.setState({ 
-      sessionToken: '', 
-    });
+  const setSessionState = (token) => {
+    try {
+      localStorage.setItem('token', token);
+      setSessionToken(token);
+    } catch (error) {
+      console.error('Failed to set token in localStorage', error);
+    }
+  };
+
+  const logout = () => {
+    setSessionToken('');
     localStorage.clear();
-  }
+  };
 
-  protectedViews = () => {
-    if (this.state.sessionToken === localStorage.getItem('token')) {
-      return (
-        <Routes>
-          <Route path='/' element={<Splash sessionToken={this.state.sessionToken} />} />
-        </Routes>
-      )
-    } else {
-      return (
-        <Routes>
-          <Route path='/auth' element={<Auth setToken={this.setSessionState} />} />
-        </Routes>
-      )
-    }
-  }
+  const protectedViews = () => (
+    <Routes>
+      {sessionToken === localStorage.getItem('token') ? (
+        <Route path='/' element={<Splash sessionToken={sessionToken} />} />
+      ) : (
+        <Route path='/auth' element={<Auth setToken={setSessionState} />} />
+      )}
+    </Routes>
+  );
 
-  render() {
-    return (
-      <Router>
-        <div className="baseColor">
-          <NavBar clickLogout={this.logout} />
-          {this.protectedViews()}
-          <Footer />
-        </div>
-      </Router>
-    );
-  }
-}
+  return (
+    <Router>
+      <div className="baseColor">
+        <NavBar clickLogout={logout} />
+        {protectedViews()}
+        <Footer />
+      </div>
+    </Router>
+  );
+};
 
 export default App;

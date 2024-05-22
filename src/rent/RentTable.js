@@ -1,9 +1,13 @@
 import React from 'react';
 import { Table } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import '../../src/styles.css';
+import '../styles.css';
 
 const RentTable = (props) => {
+    if (!props.results || props.results.length === 0) {
+        return <div>No items available for rent.</div>;
+    }
+
     let title = props.results[0].type;
     if (title.charAt(title.length - 1) !== 's') {
         title = title + 's';

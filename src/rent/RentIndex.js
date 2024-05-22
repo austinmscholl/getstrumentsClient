@@ -16,9 +16,17 @@ const RentIndex = (props) => {
                 'Authorization': props.token
             })
         })
-            .then((res) => res.json())
+            .then((res) => {
+                if (!res.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return res.json();
+            })
             .then((res) => {
                 setResults(res);
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
             });
     };
 
@@ -33,9 +41,10 @@ const RentIndex = (props) => {
     return (
         <div>
             <form onSubmit={fetchResults}>
-                <label>
+                <label htmlFor="selection">
                     Pick an instrument:
                     <select id="selection" value={type} onChange={handleChange}>
+                        <option value="">Select Type</option>
                         <option value="Electric Guitar">Electric Guitar</option>
                         <option value="Acoustic Guitar">Acoustic Guitar</option>
                         <option value="Bass Guitar">Bass Guitar</option>

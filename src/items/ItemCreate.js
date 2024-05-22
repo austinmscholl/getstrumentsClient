@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import '../../src/styles.css';
+import '../styles.css';
 import APIURL from '../helpers/environment';
 
 const ItemCreate = ({ token, updateItemsArray }) => {
@@ -42,7 +42,12 @@ const ItemCreate = ({ token, updateItemsArray }) => {
                 'Authorization': token
             })
         })
-        .then((res) => res.json())
+        .then((res) => {
+            if (!res.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return res.json();
+        })
         .then(() => {
             updateItemsArray();
             setItem({
@@ -56,6 +61,9 @@ const ItemCreate = ({ token, updateItemsArray }) => {
                 availability: false,
                 rating: ''
             });
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
         });
     };
 
@@ -68,8 +76,7 @@ const ItemCreate = ({ token, updateItemsArray }) => {
                     <Label for="type">Type</Label>
                     <Input type="select" name="type" id="type" value={item.type} onChange={handleChange}>
                         <option value="">Select Type</option>
-                        <option value="Electric Guitar">Electric Guitar</option>
-                        <option value="Acoustic Guitar">Acoustic Guitar</option>
+                        <option value="Guitar">Guitar</option>
                         <option value="Bass Guitar">Bass Guitar</option>
                         <option value="Drums">Drums</option>
                         <option value="Electronic Drums">Electronic Drums</option>

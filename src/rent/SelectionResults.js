@@ -8,10 +8,15 @@ const SelectionResults = ({ fetchResults, resultsFromProps = [], isSelectionMade
 
     useEffect(() => {
         if (fetchResults) {
-            fetchResults().then(fetchedResults => {
-                setResults(fetchedResults);
-                setSelectionMade(true);
-            });
+            fetchResults()
+                .then(fetchedResults => {
+                    setResults(fetchedResults);
+                    setSelectionMade(true);
+                })
+                .catch(error => {
+                    console.error('Error fetching results:', error);
+                    setSelectionMade(true);
+                });
         }
     }, [fetchResults]);
 

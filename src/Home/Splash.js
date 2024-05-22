@@ -3,7 +3,7 @@ import ItemIndex from '../items/ItemIndex';
 import RentIndex from '../rent/RentIndex';
 import BookingIndex from '../booking/BookingIndex';
 import { Button } from 'reactstrap';
-import '../../src/styles.css';
+import '../styles.css';
 import { Routes, Route, Link } from 'react-router-dom';
 
 class Splash extends React.Component {

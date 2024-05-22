@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Form, FormGroup, Label, Input, Modal, ModalHeader, ModalBody } from 'reactstrap';
-import '../../src/styles.css';
+import '../styles.css';
 
 const ItemEdit = ({ item, update, cancel }) => {
     const [updatedItem, setUpdatedItem] = useState({

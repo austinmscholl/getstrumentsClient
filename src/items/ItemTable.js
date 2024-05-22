@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Table, Button, Modal, ModalBody, ModalFooter } from 'reactstrap';
-import '../../src/styles.css';
+import '../styles.css';
 
 const ItemTable = ({ items, deleteItem, updateItem }) => {
     const [deleteModal, setDeleteModal] = useState(false);
@@ -45,7 +45,7 @@ const ItemTable = ({ items, deleteItem, updateItem }) => {
                             <td>{item.rating}</td>
                             <td>
                                 <Button size="sm" onClick={() => toggle(item.id)} color="secondary">Delete</Button>
-                                <Modal isOpen={deleteModal && currentItemId === item.id} toggle={toggle}>
+                                <Modal isOpen={deleteModal && currentItemId === item.id} toggle={() => toggle(item.id)}>
                                     <ModalBody>
                                         Are you sure you want to delete this item?
                                     </ModalBody>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import APIURL from '../helpers/environment';
-import '../../src/styles.css';
+import '../styles.css';
 
 const Login = ({ setToken }) => {
     const [email, setEmail] = useState('');
@@ -15,7 +15,11 @@ const Login = ({ setToken }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('button pressed');
+        if (!email || !password) {
+            alert('Email and Password are required');
+            return;
+        }
+
         fetch(`${APIURL}/api/login`, {
             method: 'POST',
             body: JSON.stringify({ user: { email, password } }),
@@ -23,11 +27,18 @@ const Login = ({ setToken }) => {
                 'Content-Type': 'application/json'
             })
         })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => {
-                console.log(data.sessionToken);
                 setToken(data.sessionToken);
                 localStorage.setItem('token', data.sessionToken);
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
             });
     };
 

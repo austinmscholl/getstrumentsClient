@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Row, Col } from 'reactstrap';
 import Signup from './Signup';
 import Login from './Login';
-import '../../src/styles.css';
+import '../styles.css';
 
 const Auth = ({ setToken }) => {
     return (
@@ -21,6 +21,6 @@ const Auth = ({ setToken }) => {
             </Container>
         </div>
     );
-}
+};
 
 export default Auth;

@@ -26,8 +26,16 @@ const BookingIndex = (props) => {
                 'Authorization': props.token
             }
         })
-        .then(res => res.json())
-        .then(bookingData => setBookings(bookingData));
+        .then(res => {
+            if (!res.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return res.json();
+        })
+        .then(bookingData => setBookings(bookingData))
+        .catch(error => {
+            console.error('Error fetching bookings:', error);
+        });
     };
 
     const handleDateChange = (ranges) => {
@@ -52,10 +60,18 @@ const BookingIndex = (props) => {
                 'Authorization': props.token
             }
         })
-        .then(res => res.json())
+        .then(res => {
+            if (!res.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return res.json();
+        })
         .then(() => {
             handleResetClick();
             alert("Congratulations, you've booked this instrument!");
+        })
+        .catch(error => {
+            console.error('Error making booking:', error);
         });
     };
 
