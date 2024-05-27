@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/getstrumentsClient/static/css/main.0f7d21d6.css",
+    "main.js": "/getstrumentsClient/static/js/main.bace0e42.js",
+    "index.html": "/getstrumentsClient/index.html",
+    "main.0f7d21d6.css.map": "/getstrumentsClient/static/css/main.0f7d21d6.css.map",
+    "main.bace0e42.js.map": "/getstrumentsClient/static/js/main.bace0e42.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0f7d21d6.css",
+    "static/js/main.bace0e42.js"
+  ]
+}
